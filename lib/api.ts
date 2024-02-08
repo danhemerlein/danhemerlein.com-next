@@ -336,18 +336,6 @@ const aboutBase = `
     ${imageBase}
   }
 
-  heroImagePrime {
-    ${imageBase}
-  }
-
-  aboutPageImage {
-    ${imageBase}
-  }
-
-  aboutPageImagePrime {
-    ${imageBase}
-  }
-
   contactLineOne {
     json
   }
