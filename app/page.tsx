@@ -1,113 +1,140 @@
-import Image from "next/image";
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import cn from 'classnames'
+import { draftMode } from 'next/headers'
+import Image from 'next/image'
 
-export default function Home() {
+import {
+  getAboutPage,
+  getAllBlog,
+  getAllCodeProjects,
+  getAllMusicProjects,
+} from '@/lib/api'
+import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
+
+const Home = async () => {
+  const { isEnabled } = draftMode()
+
+  const allCodeProjects = await getAllCodeProjects(isEnabled)
+  const allMusicProjects = await getAllMusicProjects(isEnabled)
+  const allBlogPosts = await getAllBlog(isEnabled)
+  const aboutPage = await getAboutPage(isEnabled)
+
+  console.log(aboutPage.contactLineOne.json.content[0])
+  console.log(aboutPage.contactLineTwo.json.content[0])
+  console.log(aboutPage.bio.json.content[0])
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="p-4">
+      <div className="flex gap-4">
+        <div>
+          <p>
+            {aboutPage.contactLineOne.json.content.map((item) => {
+              return documentToReactComponents(
+                item,
+                generateRichTextParserOptions(aboutPage, true),
+              )
+            })}
+          </p>
+          <p>
+            {aboutPage.contactLineTwo.json.content.map((item) => {
+              return documentToReactComponents(
+                item,
+                generateRichTextParserOptions(aboutPage, true),
+              )
+            })}
+          </p>
+          <Image
+            src={aboutPage.heroImage.url}
+            height={500}
+            width={500}
+            alt={aboutPage.heroImage.title}
+          />
+        </div>
+        <div>
+          {aboutPage.bio.json.content.map((item) => {
+            return documentToReactComponents(
+              item,
+              generateRichTextParserOptions(aboutPage, true),
+            )
+          })}
         </div>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <h2 className="my-4 font-bold">code</h2>
+      {allCodeProjects.map((project, key) => {
+        return (
+          <div
+            className={cn(
+              'flex items-start justify-between gap-2 border-b border-l border-r border-solid border-ink px-4 py-2 first-of-type:border-t',
+              key === 0 && 'border-t',
+            )}
+            key={project.sys.id}
+          >
+            <h3 className="my-2">{project.title}</h3>
+          </div>
+        )
+      })}
+
+      <h2 className="my-4 flex font-extrabold">music</h2>
+      <div className="mb-4 flex gap-4">
+        <div className="flex items-center gap-2">
+          <p>wrote</p>
+          <div className="h-4 w-4 rounded-full bg-red"></div>
+        </div>
+        <div className="flex items-center gap-2">
+          <p>produced</p>
+          <div className="h-4 w-4 rounded-full bg-vinRouge"></div>
+        </div>
+        <div className="flex items-center gap-2">
+          <p>performed</p>
+          <div className="h-4 w-4 rounded-full bg-lochmara"></div>
+        </div>
       </div>
+      {allMusicProjects.map((project, key) => {
+        const { wrote, produced, performed, title, artist, releaseDate } =
+          project
+        return (
+          <div
+            className={cn(
+              'flex items-start justify-between gap-2 border-b border-l border-r border-solid border-ink px-4 py-2 first-of-type:border-t',
+              key === 0 && 'border-t',
+            )}
+            key={project.sys.id}
+          >
+            <div>
+              <h3 className="my-2 font-bold">{title}</h3>
+              <p>
+                <span className="italic">by</span>
+                &nbsp;{artist}&nbsp;
+                <span>
+                  <span className="italic">released</span>
+                  &nbsp;{releaseDate}
+                </span>
+              </p>
+            </div>
+            <div className="flex gap-2">
+              {wrote && <div className="h-4 w-4 rounded-full bg-red"></div>}
+              {produced && (
+                <div className="bg-vin-rouge h-4 w-4 rounded-full bg-vinRouge"></div>
+              )}
+              {performed && (
+                <div className="h-4 w-4 rounded-full bg-lochmara"></div>
+              )}
+            </div>
+          </div>
+        )
+      })}
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <h2 className="my-4 font-bold">blog</h2>
+      {allBlogPosts.map((project) => {
+        return (
+          <div key={project.sys.id}>
+            <h3 className="my-2">{project.title}</h3>
+          </div>
+        )
+      })}
     </main>
-  );
+  )
 }
+
+export default Home
