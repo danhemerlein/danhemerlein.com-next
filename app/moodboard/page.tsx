@@ -9,7 +9,7 @@ const Page = async () => {
   const moodboard = await getMoodboard(isEnabled)
 
   return (
-    <main className="p-24">
+    <>
       <h1 className="my-4 font-bold">moodboard</h1>
       {moodboard.map((project) => {
         return (
@@ -23,7 +23,7 @@ const Page = async () => {
           </div>
         )
       })}
-    </main>
+    </>
   )
 }
 

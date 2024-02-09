@@ -268,18 +268,30 @@ const blogBase = `
 const extractBlogEntries = (fetchResponse: any): any[] =>
   fetchResponse?.data?.blogPostCollection?.items
 
-export const getAllBlog = async (isDraftMode: boolean): Promise<any[]> => {
+export const getAllBlog = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      blogPostCollection(order: published_DESC preview: ${
-        isDraftMode ? 'true' : 'false'
-      },limit: 10) {
+      blogPostCollection(order: published_DESC, limit: 10) {
        ${blogBase}
       }
     }`,
-    isDraftMode,
   )
   return extractBlogEntries(entries)
+}
+
+const extractBlogEntry = (fetchResponse: any): any[] => {
+  return fetchResponse?.data?.blogPostCollection?.items[0]
+}
+
+export const getBlogPostByHandle = async (handle: string): Promise<any[]> => {
+  const entry = await fetchGraphQL(
+    `query {
+      blogPostCollection(where: { handle: "${handle}" },  limit: 1) {
+        ${blogBase}
+      }
+    }`,
+  )
+  return extractBlogEntry(entry)
 }
 
 // mooboard
