@@ -1,8 +1,14 @@
+'use client'
+
 import cn from 'classnames'
+
+import { UseModal } from '../hooks/UseModal'
 
 import MusicKey from './MusicKey'
 
 const Music = ({ allMusicProjects }) => {
+  const { toggleModal } = UseModal()
+
   return (
     <>
       <h2 className="my-4 flex font-extrabold">music</h2>
@@ -20,17 +26,21 @@ const Music = ({ allMusicProjects }) => {
             )}
             key={project.sys.id}
           >
-            <div>
-              <h3 className="my-2 font-bold">{title}</h3>
-              <p>
+            <button
+              onClick={toggleModal}
+              className="text-left transition-colors hover:text-red"
+            >
+              <span className="my-2 block font-bold">{title}</span>
+              <span className="block">
                 <span className="italic">by</span>
                 &nbsp;{artist}&nbsp;
                 <span>
                   <span className="italic">released</span>
                   &nbsp;{releaseDate}
                 </span>
-              </p>
-            </div>
+              </span>
+            </button>
+
             <div className="flex gap-2">
               {wrote && <div className="h-4 w-4 rounded-full bg-red"></div>}
               {produced && (

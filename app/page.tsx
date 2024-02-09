@@ -11,6 +11,7 @@ import BlogList from './components/BlogList'
 import Code from './components/Code'
 import Hero from './components/Hero'
 import Music from './components/Music'
+import MusicModal from './components/MusicModal'
 
 const Home = async () => {
   const { isEnabled } = draftMode()
@@ -26,6 +27,7 @@ const Home = async () => {
       <Code allCodeProjects={allCodeProjects} />
       <Music allMusicProjects={allMusicProjects} />
       <BlogList allBlogPosts={allBlogPosts} />
+      <MusicModal />
     </>
   )
 }

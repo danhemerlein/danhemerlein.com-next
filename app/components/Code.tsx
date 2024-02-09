@@ -29,8 +29,9 @@ const Code = ({ allCodeProjects }) => {
           >
             <button
               className={cn(
-                'flex w-full cursor-pointer items-center justify-between gap-2 border-b border-l border-r border-solid border-ink px-4 py-2 first-of-type:border-t',
+                'flex w-full cursor-pointer items-center justify-between gap-2 border-b border-l border-r border-solid border-ink px-4 py-2 transition-colors first-of-type:border-t hover:text-red',
                 key === 0 && 'border-t',
+                hasDescription ? 'cursor-pointer' : 'cursor-default',
               )}
               id={`${removeSpecialCharactersAndHandleize(title)}-button`}
               data-state={collapsed ? 'collapsed' : 'open'}

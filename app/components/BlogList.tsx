@@ -7,8 +7,11 @@ const BlogList = ({ allBlogPosts }) => {
       {allBlogPosts.map((project) => {
         const link = `/notes/${project.handle}`
         return (
-          <div key={project.sys.id}>
-            <Link href={link} className="my-2 cursor-pointer">
+          <div key={project.sys.id} className="my-4">
+            <Link
+              href={link}
+              className="my-2	cursor-pointer italic underline decoration-dotted	 underline-offset-2 transition-colors hover:text-red"
+            >
               {project.title}
             </Link>
           </div>
