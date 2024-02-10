@@ -9,6 +9,7 @@ import {
 
 import BlogList from './components/BlogList'
 import Code from './components/Code'
+import Footer from './components/Footer'
 import Hero from './components/Hero'
 import Music from './components/Music'
 import MusicModal from './components/MusicModal'
@@ -27,6 +28,7 @@ const Home = async () => {
       <Code allCodeProjects={allCodeProjects} />
       <Music allMusicProjects={allMusicProjects} />
       <BlogList allBlogPosts={allBlogPosts} />
+      <Footer />
       <MusicModal />
     </>
   )

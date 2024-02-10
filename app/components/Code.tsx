@@ -18,7 +18,7 @@ const Code = ({ allCodeProjects }) => {
     <>
       <h2 className="my-4 font-bold">code</h2>
       {allCodeProjects.map((project, key) => {
-        const { description, image, title } = project
+        const { description, image, title, timelineLaunchDate } = project
         const hasDescription = !!description?.json?.content?.length
         const hasImage = !!image?.url?.length
 
@@ -38,8 +38,11 @@ const Code = ({ allCodeProjects }) => {
               aria-controls={`${removeSpecialCharactersAndHandleize(title)}-panel`}
               onClick={hasDescription ? clickHandler : () => {}}
             >
-              <h3 className="my-2">{title}</h3>
-              <div className="h-12 w-12">
+              <div>
+                <p className="my-2 text-left font-bold">{title}</p>
+                <p className="text-left">{timelineLaunchDate}</p>
+              </div>
+              <div className="flex h-12 w-12 items-center">
                 {hasImage && (
                   <Image
                     src={image.url}
@@ -58,7 +61,7 @@ const Code = ({ allCodeProjects }) => {
                   aria-labelledby={`${removeSpecialCharactersAndHandleize(title)}-button`}
                   data-state={collapsed ? 'collapsed' : 'open'}
                   id={`${removeSpecialCharactersAndHandleize(title)}-panel`}
-                  className="px-8 py-4"
+                  className="rtc px-8 py-4"
                 >
                   {description.json.content.map((item) => {
                     return documentToReactComponents(

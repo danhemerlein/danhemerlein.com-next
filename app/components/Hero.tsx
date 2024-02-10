@@ -5,23 +5,19 @@ import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
 
 const Hero = ({ aboutPage }) => (
   <div className="flex gap-4">
-    <div>
-      <p>
-        {aboutPage.contactLineOne.json.content.map((item) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(aboutPage, true),
-          )
-        })}
-      </p>
-      <p>
-        {aboutPage.contactLineTwo.json.content.map((item) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(aboutPage, true),
-          )
-        })}
-      </p>
+    <div className="rtc">
+      {aboutPage.contactLineOne.json.content.map((item) => {
+        return documentToReactComponents(
+          item,
+          generateRichTextParserOptions(aboutPage, true),
+        )
+      })}
+      {aboutPage.contactLineTwo.json.content.map((item) => {
+        return documentToReactComponents(
+          item,
+          generateRichTextParserOptions(aboutPage, true),
+        )
+      })}
       <Image
         src={aboutPage.heroImage.url}
         height={500}
@@ -29,7 +25,7 @@ const Hero = ({ aboutPage }) => (
         alt={aboutPage.heroImage.title}
       />
     </div>
-    <div>
+    <div className="rtc">
       {aboutPage.bio.json.content.map((item) => {
         return documentToReactComponents(
           item,

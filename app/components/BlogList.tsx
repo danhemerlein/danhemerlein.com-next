@@ -17,6 +17,9 @@ const BlogList = ({ allBlogPosts }) => {
           </div>
         )
       })}
+      <button className="border border-solid border-ink bg-ink px-4 py-2 text-reverse transition-colors hover:bg-reverse hover:text-ink">
+        load more
+      </button>
     </>
   )
 }

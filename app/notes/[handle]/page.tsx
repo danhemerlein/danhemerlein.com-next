@@ -28,31 +28,38 @@ const BlogPost = async ({ params }) => {
   const updatedAt = post.sys.publishedAt
 
   return (
-    <main className="">
-      <section className="w-full">
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-          {title}
-        </h1>
+    <main>
+      <section className="flex items-center justify-center">
+        <div className="max-w-prose">
+          <h1 className="mb-4 text-left text-4xl font-bold tracking-tighter sm:text-5xl">
+            {title}
+          </h1>
 
-        <div>{description}</div>
+          <div className="mb-2 ">{description}</div>
 
-        <div>
-          <span>
-            published on {createReadableDateFromContentful(published)}
-          </span>
-          <br />
-          <span>updated on {createReadableDateFromContentful(updatedAt)}</span>
-          <br />
-          estimated reading time:{' '}
-          {calculateReadingTimeFromContentfulContent(content.json.content)} min
+          <div className="mb-4">
+            <p className="mb-2">
+              published on {createReadableDateFromContentful(published)}
+            </p>
+            <p className="mb-2">
+              updated on {createReadableDateFromContentful(updatedAt)}
+            </p>
+            <p className="mb-2">
+              estimated reading time:{' '}
+              {calculateReadingTimeFromContentfulContent(content.json.content)}{' '}
+              min
+            </p>
+          </div>
+
+          <div className="rtc ">
+            {content.json.content.map((item) => {
+              return documentToReactComponents(
+                item,
+                generateRichTextParserOptions(post, true),
+              )
+            })}
+          </div>
         </div>
-
-        {content.json.content.map((item) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(post, true),
-          )
-        })}
       </section>
     </main>
   )

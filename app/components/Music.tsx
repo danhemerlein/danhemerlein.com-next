@@ -1,6 +1,6 @@
 'use client'
-
 import cn from 'classnames'
+import Image from 'next/image'
 
 import { UseModal } from '../hooks/UseModal'
 
@@ -28,10 +28,18 @@ const Music = ({ allMusicProjects }) => {
           >
             <button
               onClick={toggleModal}
-              className="text-left transition-colors hover:text-red"
+              className="flex gap-4 text-left transition-colors hover:text-red"
             >
-              <span className="my-2 block font-bold">{title}</span>
+              <Image
+                src={project.artwork.url}
+                alt={project.artwork.title}
+                height={400}
+                width={400}
+                className="h-full w-24"
+              ></Image>
+
               <span className="block">
+                <span className="my-2 block font-bold">{title}</span>
                 <span className="italic">by</span>
                 &nbsp;{artist}&nbsp;
                 <span>
