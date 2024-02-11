@@ -117,6 +117,8 @@ export const getPostAndMorePosts = async (
   }
 }
 
+// MY CODE
+
 // code projects
 const codeProjectBase = `
   items {
@@ -226,7 +228,6 @@ export const getAllMusicProjects = async (
 }
 
 // blog
-
 const blogSysBase = `
   sys {
     id
@@ -245,6 +246,7 @@ const blogSysBase = `
 `
 
 const blogBase = `
+
   items {
     ${blogSysBase}
 
@@ -265,18 +267,33 @@ const blogBase = `
   }
 `
 
-const extractBlogEntries = (fetchResponse: any): any[] =>
-  fetchResponse?.data?.blogPostCollection?.items
+const extractBlogEntries = (fetchResponse: any): any[] => {
+  return fetchResponse?.data?.blogPostCollection?.items
+}
 
 export const getAllBlog = async (): Promise<any[]> => {
-  const entries = await fetchGraphQL(
-    `query {
-      blogPostCollection(order: published_DESC, limit: 10) {
-       ${blogBase}
-      }
-    }`,
-  )
-  return extractBlogEntries(entries)
+  const pageSize = 10
+  const allBlogPosts = []
+  let skip = 0
+
+  while (true) {
+    const entries = await fetchGraphQL(
+      `query {
+        blogPostCollection(order: published_DESC, limit: ${pageSize}, skip: ${skip}) {
+          ${blogBase}
+        }
+      }`,
+    )
+
+    if (entries.data.blogPostCollection.items.length === 0) {
+      break
+    }
+
+    allBlogPosts.push(...extractBlogEntries(entries))
+    skip += pageSize
+  }
+
+  return allBlogPosts
 }
 
 const extractBlogEntry = (fetchResponse: any): any[] => {
@@ -295,7 +312,6 @@ export const getBlogPostByHandle = async (handle: string): Promise<any[]> => {
 }
 
 // mooboard
-
 const moodboardBase = `
   sys {
     id
@@ -329,7 +345,6 @@ export const getMoodboard = async (isDraftMode: boolean): Promise<any[]> => {
 }
 
 // about
-
 const imageBase = `
   title
   url

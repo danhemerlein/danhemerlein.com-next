@@ -1,10 +1,27 @@
+'use client'
 import Link from 'next/link'
+import { useState } from 'react'
 
-const BlogList = ({ allBlogPosts }) => {
+import LoadMoreButton from './LoadMoreButton'
+import ProgressBar from './ProgressBar'
+
+const BlogList = ({ allBlogPosts, totalPosts }) => {
+  const [page, setPage] = useState(0)
+  const [displayedPosts, setDisplayedPosts] = useState(allBlogPosts[page])
+  const [allPostsLoaded, setAllPostsLoaded] = useState(false)
+  const handleLoadMore = () => {
+    if (allPostsLoaded) return
+    setPage((prev) => prev + 1)
+    setDisplayedPosts((prev) => [...prev, ...allBlogPosts[page + 1]])
+    if (displayedPosts?.length === totalPosts) {
+      setAllPostsLoaded(true)
+    }
+  }
+
   return (
     <>
       <h2 className="my-4 font-bold">blog</h2>
-      {allBlogPosts.map((project) => {
+      {displayedPosts?.map((project) => {
         const link = `/notes/${project.handle}`
         return (
           <div key={project.sys.id} className="my-4">
@@ -17,9 +34,13 @@ const BlogList = ({ allBlogPosts }) => {
           </div>
         )
       })}
-      <button className="border border-solid border-ink bg-ink px-4 py-2 text-reverse transition-colors hover:bg-reverse hover:text-ink">
-        load more
-      </button>
+
+      <LoadMoreButton
+        handleLoadMore={handleLoadMore}
+        allLoaded={allPostsLoaded}
+      />
+
+      <ProgressBar />
     </>
   )
 }

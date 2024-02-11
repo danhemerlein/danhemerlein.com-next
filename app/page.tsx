@@ -6,6 +6,7 @@ import {
   getAllCodeProjects,
   getAllMusicProjects,
 } from '@/lib/api'
+import { chunkArray } from '@/lib/helper-functions'
 
 import BlogList from './components/BlogList'
 import Code from './components/Code'
@@ -22,12 +23,17 @@ const Home = async () => {
   const allBlogPosts = await getAllBlog()
   const aboutPage = await getAboutPage(isEnabled)
 
+  console.log(allBlogPosts)
+
   return (
     <>
       <Hero aboutPage={aboutPage} />
       <Code allCodeProjects={allCodeProjects} />
       <Music allMusicProjects={allMusicProjects} />
-      <BlogList allBlogPosts={allBlogPosts} />
+      <BlogList
+        allBlogPosts={chunkArray(allBlogPosts, 10)}
+        totalPosts={allBlogPosts.length}
+      />
       <Footer />
       <MusicModal />
     </>
