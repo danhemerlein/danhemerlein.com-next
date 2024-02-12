@@ -1,6 +1,6 @@
 'use client'
-import cn from 'classnames'
 import ReactModal from 'react-modal'
+import cn from 'classnames'
 
 import { UseModal } from '../hooks/UseModal'
 

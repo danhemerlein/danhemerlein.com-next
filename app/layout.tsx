@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "dan hemerlein's online portfolio",
 }
 
-export default ({
+const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -25,3 +25,5 @@ export default ({
     </body>
   </html>
 )
+
+export default Layout

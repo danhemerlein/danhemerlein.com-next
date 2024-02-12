@@ -1,10 +1,10 @@
 'use client'
 
+import { useState } from 'react'
+import AnimateHeight from 'react-animate-height'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import cn from 'classnames'
 import Image from 'next/image'
-import { useState } from 'react'
-import AnimateHeight from 'react-animate-height'
 
 import { removeSpecialCharactersAndHandleize } from '@/lib/helper-functions'
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'

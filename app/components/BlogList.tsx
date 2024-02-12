@@ -1,6 +1,6 @@
 'use client'
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
 
 import LoadMoreButton from './LoadMoreButton'
 import ProgressBar from './ProgressBar'
