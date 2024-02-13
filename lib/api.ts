@@ -127,6 +127,20 @@ export const getAllMusicProjects = async (
 }
 
 // blog
+const blogHomeBase = `
+  items {
+    sys {
+      id
+      publishedAt
+    }
+
+    title
+    handle
+    published
+
+  }
+`
+
 const blogSysBase = `
   sys {
     id
@@ -168,6 +182,18 @@ const blogBase = `
 
 const extractBlogEntries = (fetchResponse: any): any[] => {
   return fetchResponse?.data?.blogPostCollection?.items
+}
+
+export const getAllBlogList = async (): Promise<any[]> => {
+  const entries = await fetchGraphQL(
+    `query {
+        blogPostCollection(order: published_DESC) {
+          ${blogHomeBase}
+        }
+      }`,
+  )
+
+  return extractBlogEntries(entries)
 }
 
 export const getAllBlog = async (): Promise<any[]> => {

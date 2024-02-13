@@ -1,19 +1,46 @@
 'use client'
 import ReactModal from 'react-modal'
 import cn from 'classnames'
+import Image from 'next/image'
 
 import { UseModal } from '../hooks/UseModal'
 
 const Modal = ({ className }) => {
-  const { isModalOpen, toggleModal } = UseModal()
+  const { isModalOpen, toggleModal, project } = UseModal()
+  console.log(project)
+
+  if (!project) return null
+  const { title, artwork, artist } = project
+  const linkKeys = [
+    'spotify',
+    'bandcamp',
+    'apple',
+    'tidal',
+    'amazon',
+    'deezer',
+    'napster',
+    'googlePlay',
+    'soundcloud',
+  ]
+
+  const linkArray = []
+
+  linkKeys.map((key) => {
+    if (project[key] !== null) {
+      linkArray.push({
+        title: key,
+        link: project[key],
+      })
+    }
+  })
 
   return (
     <ReactModal
       isOpen={isModalOpen}
-      onRequestClose={toggleModal}
+      onRequestClose={() => toggleModal(null)}
       className={{
         base: cn(
-          'transition-cubic-bezier relative flex min-h-[32rem] w-[32rem] items-center justify-center border border-solid border-ink bg-reverse p-4 font-lack text-ink opacity-0 duration-500 lg:p-24',
+          'transition-cubic-bezier relative flex min-h-[32rem] w-[32rem] items-center justify-center  bg-reverse p-4 font-lack text-ink opacity-0 duration-500 lg:p-24',
           className,
         ),
         afterOpen: '!translate-y-0 !opacity-100',
@@ -23,11 +50,40 @@ const Modal = ({ className }) => {
     >
       <div className="flex w-full flex-col">
         <button
-          className="absolute right-8 top-8 font-lack"
-          onClick={toggleModal}
+          className="absolute right-4 top-4 z-10  font-lack text-reverse"
+          onClick={() => toggleModal(null)}
         >
           &#x2715;
         </button>
+        <Image
+          src={artwork.url}
+          alt={artwork.title}
+          height={400}
+          width={400}
+          className="h-full w-full"
+        ></Image>
+        <div className="flex justify-between">
+          <div>
+            <p className="my-1">{title}</p>
+            <p className="my-1">{artist}</p>
+          </div>
+          <div>
+            <p className="my-1">{project?.releaseDate}</p>
+          </div>
+        </div>
+
+        {linkArray.map((link) => {
+          return (
+            <a
+              key={link.link}
+              className="my-1 cursor-pointer text-center  lowercase italic underline decoration-dotted underline-offset-2 transition-colors hover:text-red focus:text-red"
+              target="_blank"
+              href={link.link}
+            >
+              {link.title}
+            </a>
+          )
+        })}
       </div>
     </ReactModal>
   )

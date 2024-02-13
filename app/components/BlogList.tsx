@@ -8,14 +8,10 @@ import ProgressBar from './ProgressBar'
 const BlogList = ({ allBlogPosts, totalPosts }) => {
   const [page, setPage] = useState(0)
   const [displayedPosts, setDisplayedPosts] = useState(allBlogPosts[page])
-  const [allPostsLoaded, setAllPostsLoaded] = useState(false)
+
   const handleLoadMore = () => {
-    if (allPostsLoaded) return
     setPage((prev) => prev + 1)
     setDisplayedPosts((prev) => [...prev, ...allBlogPosts[page + 1]])
-    if (displayedPosts?.length === totalPosts) {
-      setAllPostsLoaded(true)
-    }
   }
 
   return (
@@ -27,7 +23,7 @@ const BlogList = ({ allBlogPosts, totalPosts }) => {
           <div key={project.sys.id} className="my-4">
             <Link
               href={link}
-              className="my-2	cursor-pointer italic underline decoration-dotted	 underline-offset-2 transition-colors hover:text-red"
+              className="my-2	cursor-pointer italic underline decoration-dotted	 underline-offset-2 transition-colors hover:text-red focus:text-red"
             >
               {project.title}
             </Link>
@@ -37,10 +33,10 @@ const BlogList = ({ allBlogPosts, totalPosts }) => {
 
       <LoadMoreButton
         handleLoadMore={handleLoadMore}
-        allLoaded={allPostsLoaded}
+        allLoaded={displayedPosts.length === totalPosts}
       />
 
-      <ProgressBar />
+      <ProgressBar target={totalPosts} current={displayedPosts.length} />
     </>
   )
 }

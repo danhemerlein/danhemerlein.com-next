@@ -27,7 +27,7 @@ const Music = ({ allMusicProjects }) => {
             key={project.sys.id}
           >
             <button
-              onClick={toggleModal}
+              onClick={() => toggleModal(project)}
               className="flex gap-4 text-left transition-colors hover:text-red"
             >
               <Image

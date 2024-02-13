@@ -2,7 +2,7 @@ import { draftMode } from 'next/headers'
 
 import {
   getAboutPage,
-  getAllBlog,
+  getAllBlogList,
   getAllCodeProjects,
   getAllMusicProjects,
 } from '@/lib/api'
@@ -20,10 +20,8 @@ const Home = async () => {
 
   const allCodeProjects = await getAllCodeProjects(isEnabled)
   const allMusicProjects = await getAllMusicProjects(isEnabled)
-  const allBlogPosts = await getAllBlog()
+  const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage(isEnabled)
-
-  console.log(allBlogPosts)
 
   return (
     <>
