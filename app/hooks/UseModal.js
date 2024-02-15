@@ -14,7 +14,6 @@ export const UseModalState = () => {
       ? (document.body.style.overflow = 'auto')
       : (document.body.style.overflow = 'hidden')
 
-    console.log(project)
     setProject(project)
   }
 

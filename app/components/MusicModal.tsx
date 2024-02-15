@@ -7,7 +7,6 @@ import { UseModal } from '../hooks/UseModal'
 
 const Modal = () => {
   const { isModalOpen, toggleModal, project } = UseModal()
-  console.log(project)
 
   if (!project) return null
   const { title, artwork, artist } = project

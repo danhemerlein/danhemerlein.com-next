@@ -255,16 +255,13 @@ const extractMoodboardEntries = (fetchResponse: any): any[] => {
   return fetchResponse?.data?.moodboard?.imagesCollection.items
 }
 
-export const getMoodboard = async (isDraftMode: boolean): Promise<any[]> => {
+export const getMoodboard = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      moodboard(id: "5qaYjs8UZbaw8ZFihn1Y3w" preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      moodboard(id: "5qaYjs8UZbaw8ZFihn1Y3w") {
        ${moodboardBase}
       }
     }`,
-    isDraftMode,
   )
   return extractMoodboardEntries(entries)
 }

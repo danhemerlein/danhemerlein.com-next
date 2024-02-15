@@ -1,15 +1,20 @@
-import { draftMode } from 'next/headers'
 import Image from 'next/image'
 
 import { getMoodboard } from '@/lib/api'
 import { altTextHelper } from '@/lib/helper-functions'
 
+interface MoodboardImageGroup {
+  url: string
+  title: string
+}
+
 const Page = async () => {
-  const { isEnabled } = draftMode()
+  const moodboard = await getMoodboard()
 
-  const moodboard = await getMoodboard(isEnabled)
-
-  const renderGalleryRow = (imageGroup, index) => {
+  const renderGalleryRow = (
+    imageGroup: MoodboardImageGroup[],
+    index: number,
+  ) => {
     const imageOneURL = imageGroup[0].url
     const imageOneTitle = imageGroup[0].title
     let imageTwoURL

@@ -2,10 +2,17 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
+import { TypeBlogPostFields } from '@/types/contentful'
+
 import LoadMoreButton from './LoadMoreButton'
 import ProgressBar from './ProgressBar'
 
-const BlogList = ({ allBlogPosts, totalPosts }) => {
+interface BlogListProps {
+  allBlogPosts: TypeBlogPostFields[]
+  totalPosts: number
+}
+
+const BlogList = ({ allBlogPosts, totalPosts }: BlogListProps) => {
   const [page, setPage] = useState(0)
   const [displayedPosts, setDisplayedPosts] = useState(allBlogPosts[page])
 
@@ -17,7 +24,7 @@ const BlogList = ({ allBlogPosts, totalPosts }) => {
   return (
     <>
       <h2 className="my-4 font-bold">blog</h2>
-      {displayedPosts?.map((project) => {
+      {displayedPosts?.map((project: TypeBlogPostFields) => {
         const link = `/notes/${project.handle}`
         return (
           <div key={project.sys.id} className="my-4">
