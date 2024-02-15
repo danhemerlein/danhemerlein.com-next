@@ -8,8 +8,13 @@ import Image from 'next/image'
 
 import { removeSpecialCharactersAndHandleize } from '@/lib/helper-functions'
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
+import { TypeCodeProjectFields } from '@/types/contentful'
 
-const Code = ({ allCodeProjects }) => {
+interface CodeProps {
+  allCodeProjects: TypeCodeProjectFields[]
+}
+
+const Code = ({ allCodeProjects }: CodeProps) => {
   const [collapsed, setCollapsed] = useState(true)
   const clickHandler = () => {
     setCollapsed(!collapsed)
@@ -24,7 +29,7 @@ const Code = ({ allCodeProjects }) => {
 
         return (
           <div
-            key={project.sys.id}
+            key={project?.sys?.id}
             data-state={collapsed ? 'collapsed' : 'open'}
           >
             <button

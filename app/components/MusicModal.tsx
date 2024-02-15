@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 import { UseModal } from '../hooks/UseModal'
 
-const Modal = ({ className }) => {
+const Modal = () => {
   const { isModalOpen, toggleModal, project } = UseModal()
   console.log(project)
 
@@ -23,7 +23,7 @@ const Modal = ({ className }) => {
     'soundcloud',
   ]
 
-  const linkArray = []
+  const linkArray = [] as { title: string; link: string }[]
 
   linkKeys.map((key) => {
     if (project[key] !== null) {
@@ -41,7 +41,6 @@ const Modal = ({ className }) => {
       className={{
         base: cn(
           'transition-cubic-bezier relative flex min-h-[32rem] w-[32rem] items-center justify-center  bg-reverse p-4 font-lack text-ink opacity-0 duration-500 lg:p-24',
-          className,
         ),
         afterOpen: '!translate-y-0 !opacity-100',
         beforeClose: '!translate-y-full',

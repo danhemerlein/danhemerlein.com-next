@@ -271,34 +271,29 @@ export const getMoodboard = async (isDraftMode: boolean): Promise<any[]> => {
 
 // about
 const imageBase = `
-  title
-  url
-
   sys {
     id
   }
+  title
+  url
 `
 
 const aboutBase = `
   sys {
     id
   }
-
   heroImage {
     ${imageBase}
   }
-
   contactLineOne {
     json
   }
   contactLineTwo {
     json
   }
-
   bio {
     json
   }
-
 `
 
 const extractAboutPage = (fetchResponse: any): any[] => {
