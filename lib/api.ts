@@ -279,6 +279,7 @@ const aboutBase = `
   sys {
     id
   }
+  name
   heroImage {
     ${imageBase}
   }

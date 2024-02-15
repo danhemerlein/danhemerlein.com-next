@@ -22,6 +22,7 @@ const Home = async () => {
   const allMusicProjects = await getAllMusicProjects(isEnabled)
   const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage(isEnabled)
+  console.log(aboutPage)
 
   return (
     <>
