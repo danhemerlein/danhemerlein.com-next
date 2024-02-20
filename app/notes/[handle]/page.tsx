@@ -7,10 +7,10 @@ import {
   createReadableDateFromContentful,
 } from '@/lib/helper-functions'
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
-import { TypeBlogPostFields } from '@/types/contentful'
+import { BlogPostType } from '@/types'
 
 export const generateStaticParams = async () => {
-  const allBlogPosts: TypeBlogPostFields[] = await getAllBlog()
+  const allBlogPosts: BlogPostType[] = await getAllBlog()
 
   return allBlogPosts.map((post) => ({
     handle: post.handle,
@@ -19,10 +19,11 @@ export const generateStaticParams = async () => {
 
 interface BlogPostProps {
   params: { handle: string }
+  BlogPostType: BlogPostType
 }
 
 const BlogPost = async ({ params }: BlogPostProps) => {
-  const post: TypeBlogPostFields = await getBlogPostByHandle(params.handle)
+  const [post]: BlogPostType[] = await getBlogPostByHandle(params.handle)
 
   if (!post) {
     notFound()
@@ -57,7 +58,7 @@ const BlogPost = async ({ params }: BlogPostProps) => {
           </div>
 
           <div className="rtc ">
-            {content.json.content.map((item) => {
+            {content.json.content.map((item: any) => {
               return documentToReactComponents(
                 item,
                 generateRichTextParserOptions(post, true),

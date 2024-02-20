@@ -22,7 +22,7 @@ const Home = async () => {
   const allMusicProjects = await getAllMusicProjects(isEnabled)
   const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage(isEnabled)
-  console.log(aboutPage)
+  const chunkedBlogPosts = chunkArray(allBlogPosts, 10).flat()
 
   return (
     <>
@@ -30,7 +30,7 @@ const Home = async () => {
       <Code allCodeProjects={allCodeProjects} />
       <Music allMusicProjects={allMusicProjects} />
       <BlogList
-        allBlogPosts={chunkArray(allBlogPosts, 10)}
+        allBlogPosts={chunkedBlogPosts}
         totalPosts={allBlogPosts.length}
       />
       <Footer />

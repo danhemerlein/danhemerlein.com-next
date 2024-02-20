@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 
-const ProgressBar = ({ current, target }) => {
+interface ProgressBarProps {
+  current: number
+  target: number
+}
+
+const ProgressBar = ({ current, target }: ProgressBarProps) => {
   const [width, setWidth] = useState(0)
   const p = (current / target) * 100
 

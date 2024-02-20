@@ -50,8 +50,9 @@ const codeProjectBase = `
   }
 `
 
-const extractCodeProjectEntries = (fetchResponse: any): any[] =>
-  fetchResponse?.data?.codeProjectCollection?.items
+const extractCodeProjectEntries = (fetchResponse: any): any[] => {
+  return fetchResponse?.data?.codeProjectCollection?.items
+}
 
 export const getAllCodeProjects = async (
   isDraftMode: boolean,
@@ -66,7 +67,13 @@ export const getAllCodeProjects = async (
     }`,
     isDraftMode,
   )
-  return extractCodeProjectEntries(entries)
+  return extractCodeProjectEntries(entries).map((entry: any) => {
+    return {
+      ...entry,
+      description: entry.description.json,
+      image: entry.image,
+    }
+  })
 }
 
 // music projects
@@ -295,7 +302,13 @@ const aboutBase = `
 `
 
 const extractAboutPage = (fetchResponse: any): any[] => {
-  return fetchResponse?.data?.aboutPage
+  return {
+    ...fetchResponse?.data?.aboutPage,
+    heroImage: fetchResponse?.data?.aboutPage.heroImage,
+    contactLineOne: fetchResponse?.data?.aboutPage.contactLineOne.json,
+    contactLineTwo: fetchResponse?.data?.aboutPage.contactLineTwo.json,
+    bio: fetchResponse?.data?.aboutPage.bio.json,
+  }
 }
 
 export const getAboutPage = async (isDraftMode: boolean): Promise<any[]> => {

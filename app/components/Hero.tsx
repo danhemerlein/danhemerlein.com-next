@@ -2,12 +2,14 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'next/image'
 
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
-import { TypeAboutPageFields } from '@/types/contentful'
+import { AboutPageType } from '@/types/index'
 
 interface HeroProps {
-  aboutPage: TypeAboutPageFields
+  aboutPage: AboutPageType
 }
 const Hero = ({ aboutPage }: HeroProps) => {
+  const { contactLineOne, contactLineTwo, bio, heroImage } = aboutPage
+
   if (!aboutPage) {
     throw new Error('aboutPage is undefined')
   }
@@ -15,14 +17,14 @@ const Hero = ({ aboutPage }: HeroProps) => {
   return (
     <div className="flex gap-4">
       <div className="rtc">
-        {aboutPage?.contactLineOne?.json?.content.map((item) => {
+        {contactLineOne?.json?.content.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),
           )
         })}
 
-        {aboutPage?.contactLineTwo?.json?.content.map((item) => {
+        {contactLineTwo?.json?.content.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),
@@ -30,14 +32,14 @@ const Hero = ({ aboutPage }: HeroProps) => {
         })}
 
         <Image
-          src={aboutPage?.heroImage?.url}
+          src={heroImage?.url}
           height={500}
           width={500}
-          alt={aboutPage?.heroImage?.title}
+          alt={heroImage?.title}
         />
       </div>
       <div className="rtc">
-        {aboutPage?.bio?.json?.content.map((item) => {
+        {bio?.json?.content.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),

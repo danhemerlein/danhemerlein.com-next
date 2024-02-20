@@ -2,14 +2,14 @@
 import cn from 'classnames'
 import Image from 'next/image'
 
-import { TypeMusicProjectFields } from '@/types/contentful'
+import { MusicProjectType } from '@/types'
 
 import { UseModal } from '../hooks/UseModal'
 
 import MusicKey from './MusicKey'
 
 interface MusicProps {
-  allMusicProjects: TypeMusicProjectFields[]
+  allMusicProjects: MusicProjectType[]
 }
 
 const Music = ({ allMusicProjects }: MusicProps) => {
@@ -21,9 +21,16 @@ const Music = ({ allMusicProjects }: MusicProps) => {
 
       <MusicKey />
 
-      {allMusicProjects.map((project, key) => {
-        const { wrote, produced, performed, title, artist, releaseDate } =
-          project
+      {allMusicProjects.map((project: MusicProjectType, key: number) => {
+        const {
+          wrote,
+          produced,
+          performed,
+          title,
+          artist,
+          releaseDate,
+          artwork,
+        } = project
         return (
           <div
             className={cn(
@@ -37,8 +44,8 @@ const Music = ({ allMusicProjects }: MusicProps) => {
               className="flex gap-4 text-left transition-colors hover:text-red"
             >
               <Image
-                src={project?.artwork?.url}
-                alt={project?.artwork?.title}
+                src={artwork?.url}
+                alt={artwork?.title}
                 height={400}
                 width={400}
                 className="h-full w-24"

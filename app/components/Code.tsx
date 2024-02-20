@@ -8,10 +8,10 @@ import Image from 'next/image'
 
 import { removeSpecialCharactersAndHandleize } from '@/lib/helper-functions'
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
-import { TypeCodeProjectFields } from '@/types/contentful'
+import { CodeProjectType } from '@/types'
 
 interface CodeProps {
-  allCodeProjects: TypeCodeProjectFields[]
+  allCodeProjects: CodeProjectType[]
 }
 
 const Code = ({ allCodeProjects }: CodeProps) => {
@@ -22,7 +22,7 @@ const Code = ({ allCodeProjects }: CodeProps) => {
   return (
     <>
       <h2 className="my-4 font-bold">code</h2>
-      {allCodeProjects.map((project, key) => {
+      {allCodeProjects.map((project: CodeProjectType, key: number) => {
         const { description, image, title, timelineLaunchDate } = project
         const hasDescription = !!description?.json?.content?.length
         const hasImage = !!image?.url?.length
@@ -38,9 +38,9 @@ const Code = ({ allCodeProjects }: CodeProps) => {
                 key === 0 && 'border-t',
                 hasDescription ? 'cursor-pointer' : 'cursor-default',
               )}
-              id={`${removeSpecialCharactersAndHandleize(title)}-button`}
+              id={`${removeSpecialCharactersAndHandleize(title || '')}-button`}
               data-state={collapsed ? 'collapsed' : 'open'}
-              aria-controls={`${removeSpecialCharactersAndHandleize(title)}-panel`}
+              aria-controls={`${removeSpecialCharactersAndHandleize(title || '')}-panel`}
               onClick={hasDescription ? clickHandler : () => {}}
             >
               <div>
@@ -63,12 +63,12 @@ const Code = ({ allCodeProjects }: CodeProps) => {
               <AnimateHeight height={collapsed ? 0 : 'auto'}>
                 <div
                   role="region"
-                  aria-labelledby={`${removeSpecialCharactersAndHandleize(title)}-button`}
+                  aria-labelledby={`${removeSpecialCharactersAndHandleize(title || '')}-button`}
                   data-state={collapsed ? 'collapsed' : 'open'}
-                  id={`${removeSpecialCharactersAndHandleize(title)}-panel`}
+                  id={`${removeSpecialCharactersAndHandleize(title || '')}-panel`}
                   className="rtc px-8 py-4"
                 >
-                  {description.json.content.map((item) => {
+                  {description.json.content.map((item: any) => {
                     return documentToReactComponents(
                       item,
                       generateRichTextParserOptions(description),

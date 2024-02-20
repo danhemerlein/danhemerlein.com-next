@@ -10,7 +10,8 @@
     "verify": "yarn lint-staged",
     "prettier": "prettier --check . --write",
     "cf-export": "contentful space export --config contentful/export-config.json",
-    "cf-generate-types": "cf-content-types-generator contentful/export.json --out types/contentful"
+    "cf-generate-types": "cf-content-types-generator contentful/export.json --out types/contentful",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.17.1",

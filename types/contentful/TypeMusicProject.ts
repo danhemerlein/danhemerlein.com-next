@@ -22,6 +22,8 @@ export interface TypeMusicProjectFields {
   napster?: EntryFields.Symbol
   googlePlay?: EntryFields.Symbol
   soundcloud?: EntryFields.Symbol
+  contentTypeId: EntryFields.Symbol
+  fields: {}
 }
 
 export type TypeMusicProject = Entry<TypeMusicProjectFields>

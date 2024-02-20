@@ -7,6 +7,8 @@ export interface TypeBlogPostFields {
   content: EntryFields.RichText
   published: EntryFields.Date
   coverImage: Asset
+  contentTypeId: EntryFields.Symbol
+  fields: {}
 }
 
 export type TypeBlogPost = Entry<TypeBlogPostFields>

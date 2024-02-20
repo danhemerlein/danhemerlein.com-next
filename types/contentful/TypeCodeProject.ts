@@ -15,6 +15,8 @@ export interface TypeCodeProjectFields {
   passionProject?: EntryFields.Boolean
   freelance?: EntryFields.Boolean
   order: EntryFields.Integer
+  contentTypeId: EntryFields.Symbol
+  fields: {}
 }
 
 export type TypeCodeProject = Entry<TypeCodeProjectFields>

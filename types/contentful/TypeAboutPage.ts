@@ -6,10 +6,12 @@ export interface TypeAboutPageFields {
   aboutPageImage?: Asset
   aboutPageImagePrime?: Asset
   resume?: Asset
-  name: EntryFields.Symbol
-  contactLineOne?: EntryFields.RichText
-  contactLineTwo?: EntryFields.RichText
-  bio?: EntryFields.RichText
+  name?: EntryFields.Symbol
+  contactLineOne?: any
+  contactLineTwo?: any
+  bio?: any
+  contentTypeId?: EntryFields.Symbol
+  fields?: {}
 }
 
 export type TypeAboutPage = Entry<TypeAboutPageFields>
