@@ -1,3 +1,5 @@
+import { BlogPostType } from '@/types'
+
 const fetchGraphQL = async (query: string, preview = false): Promise<any> =>
   fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -228,11 +230,13 @@ export const getAllBlog = async (): Promise<any[]> => {
   return allBlogPosts
 }
 
-const extractBlogEntry = (fetchResponse: any): any[] => {
+const extractBlogEntry = (fetchResponse: any): BlogPostType => {
   return fetchResponse?.data?.blogPostCollection?.items[0]
 }
 
-export const getBlogPostByHandle = async (handle: string): Promise<any[]> => {
+export const getBlogPostByHandle = async (
+  handle: string,
+): Promise<BlogPostType> => {
   const entry = await fetchGraphQL(
     `query {
       blogPostCollection(where: { handle: "${handle}" },  limit: 1) {

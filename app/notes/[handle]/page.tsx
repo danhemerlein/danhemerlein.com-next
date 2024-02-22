@@ -19,11 +19,10 @@ export const generateStaticParams = async () => {
 
 interface BlogPostProps {
   params: { handle: string }
-  BlogPostType: BlogPostType
 }
 
 const BlogPost = async ({ params }: BlogPostProps) => {
-  const [post]: BlogPostType[] = await getBlogPostByHandle(params.handle)
+  const post: BlogPostType = await getBlogPostByHandle(params.handle)
 
   if (!post) {
     notFound()

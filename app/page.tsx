@@ -22,7 +22,7 @@ const Home = async () => {
   const allMusicProjects = await getAllMusicProjects(isEnabled)
   const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage()
-  const chunkedBlogPosts = chunkArray(allBlogPosts, 10).flat()
+  const chunkedBlogPosts = chunkArray(allBlogPosts, 10)
 
   return (
     <>

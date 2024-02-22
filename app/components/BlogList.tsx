@@ -8,13 +8,13 @@ import LoadMoreButton from './LoadMoreButton'
 import ProgressBar from './ProgressBar'
 
 interface BlogListProps {
-  allBlogPosts: BlogPostListType[]
+  allBlogPosts: BlogPostListType[][]
   totalPosts: number
 }
 
 const BlogList = ({ allBlogPosts, totalPosts }: BlogListProps) => {
   const [page, setPage] = useState(0)
-  const [displayedPosts, setDisplayedPosts] = useState<BlogPostListType[]>([
+  const [displayedPosts, setDisplayedPosts] = useState<BlogPostListType[][]>([
     allBlogPosts[page],
   ])
 
