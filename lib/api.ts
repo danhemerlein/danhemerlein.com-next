@@ -1,3 +1,5 @@
+import { BlogPostType } from '@/types'
+
 const fetchGraphQL = async (query: string, preview = false): Promise<any> =>
   fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -50,8 +52,9 @@ const codeProjectBase = `
   }
 `
 
-const extractCodeProjectEntries = (fetchResponse: any): any[] =>
-  fetchResponse?.data?.codeProjectCollection?.items
+const extractCodeProjectEntries = (fetchResponse: any): any[] => {
+  return fetchResponse?.data?.codeProjectCollection?.items
+}
 
 export const getAllCodeProjects = async (
   isDraftMode: boolean,
@@ -66,7 +69,13 @@ export const getAllCodeProjects = async (
     }`,
     isDraftMode,
   )
-  return extractCodeProjectEntries(entries)
+  return extractCodeProjectEntries(entries).map((entry: any) => {
+    return {
+      ...entry,
+      description: entry.description.json,
+      image: entry.image,
+    }
+  })
 }
 
 // music projects
@@ -127,6 +136,20 @@ export const getAllMusicProjects = async (
 }
 
 // blog
+const blogHomeBase = `
+  items {
+    sys {
+      id
+      publishedAt
+    }
+
+    title
+    handle
+    published
+
+  }
+`
+
 const blogSysBase = `
   sys {
     id
@@ -170,6 +193,18 @@ const extractBlogEntries = (fetchResponse: any): any[] => {
   return fetchResponse?.data?.blogPostCollection?.items
 }
 
+export const getAllBlogList = async (): Promise<any[]> => {
+  const entries = await fetchGraphQL(
+    `query {
+        blogPostCollection(order: published_DESC) {
+          ${blogHomeBase}
+        }
+      }`,
+  )
+
+  return extractBlogEntries(entries)
+}
+
 export const getAllBlog = async (): Promise<any[]> => {
   const pageSize = 10
   const allBlogPosts = []
@@ -195,11 +230,13 @@ export const getAllBlog = async (): Promise<any[]> => {
   return allBlogPosts
 }
 
-const extractBlogEntry = (fetchResponse: any): any[] => {
+const extractBlogEntry = (fetchResponse: any): BlogPostType => {
   return fetchResponse?.data?.blogPostCollection?.items[0]
 }
 
-export const getBlogPostByHandle = async (handle: string): Promise<any[]> => {
+export const getBlogPostByHandle = async (
+  handle: string,
+): Promise<BlogPostType> => {
   const entry = await fetchGraphQL(
     `query {
       blogPostCollection(where: { handle: "${handle}" },  limit: 1) {
@@ -229,16 +266,13 @@ const extractMoodboardEntries = (fetchResponse: any): any[] => {
   return fetchResponse?.data?.moodboard?.imagesCollection.items
 }
 
-export const getMoodboard = async (isDraftMode: boolean): Promise<any[]> => {
+export const getMoodboard = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      moodboard(id: "5qaYjs8UZbaw8ZFihn1Y3w" preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      moodboard(id: "5qaYjs8UZbaw8ZFihn1Y3w") {
        ${moodboardBase}
       }
     }`,
-    isDraftMode,
   )
   return extractMoodboardEntries(entries)
 }
@@ -247,48 +281,45 @@ export const getMoodboard = async (isDraftMode: boolean): Promise<any[]> => {
 const imageBase = `
   title
   url
-
-  sys {
-    id
-  }
 `
 
 const aboutBase = `
   sys {
     id
   }
-
+  name
   heroImage {
     ${imageBase}
   }
-
   contactLineOne {
     json
   }
   contactLineTwo {
     json
   }
-
   bio {
     json
   }
-
 `
 
-const extractAboutPage = (fetchResponse: any): any[] => {
-  return fetchResponse?.data?.aboutPage
+const extractAboutPage = (fetchResponse: any) => {
+  return {
+    ...fetchResponse?.data?.aboutPage,
+    heroImage: fetchResponse?.data?.aboutPage.heroImage,
+    contactLineOne: fetchResponse?.data?.aboutPage.contactLineOne.json,
+    contactLineTwo: fetchResponse?.data?.aboutPage.contactLineTwo.json,
+    bio: fetchResponse?.data?.aboutPage.bio.json,
+  }
 }
 
-export const getAboutPage = async (isDraftMode: boolean): Promise<any[]> => {
+export const getAboutPage = async (): Promise<any> => {
   const entries = await fetchGraphQL(
     `query {
-      aboutPage(id: "4s79WxHDy7QgVK7V8qomFM" preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      aboutPage(id: "4s79WxHDy7QgVK7V8qomFM") {
        ${aboutBase}
       }
     }`,
-    isDraftMode,
   )
+
   return extractAboutPage(entries)
 }

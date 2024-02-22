@@ -7,25 +7,30 @@ import {
   createReadableDateFromContentful,
 } from '@/lib/helper-functions'
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
+import { BlogPostType } from '@/types'
 
 export const generateStaticParams = async () => {
-  const allBlogPosts = await getAllBlog()
+  const allBlogPosts: BlogPostType[] = await getAllBlog()
 
   return allBlogPosts.map((post) => ({
     handle: post.handle,
   }))
 }
 
-const BlogPost = async ({ params }) => {
-  const post = await getBlogPostByHandle(params.handle)
+interface BlogPostProps {
+  params: { handle: string }
+}
+
+const BlogPost = async ({ params }: BlogPostProps) => {
+  const post: BlogPostType = await getBlogPostByHandle(params.handle)
 
   if (!post) {
     notFound()
   }
 
-  const { title, description, published, coverImage, content } = post
+  const { title, description, published, content } = post
 
-  const updatedAt = post.sys.publishedAt
+  const updatedAt = post?.sys?.publishedAt
 
   return (
     <main>
@@ -46,13 +51,13 @@ const BlogPost = async ({ params }) => {
             </p>
             <p className="mb-2">
               estimated reading time:{' '}
-              {calculateReadingTimeFromContentfulContent(content.json.content)}{' '}
+              {calculateReadingTimeFromContentfulContent(content.json.content)}
               min
             </p>
           </div>
 
           <div className="rtc ">
-            {content.json.content.map((item) => {
+            {content.json.content.map((item: any) => {
               return documentToReactComponents(
                 item,
                 generateRichTextParserOptions(post, true),

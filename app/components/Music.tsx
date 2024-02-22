@@ -2,11 +2,17 @@
 import cn from 'classnames'
 import Image from 'next/image'
 
+import { MusicProjectType } from '@/types'
+
 import { UseModal } from '../hooks/UseModal'
 
 import MusicKey from './MusicKey'
 
-const Music = ({ allMusicProjects }) => {
+interface MusicProps {
+  allMusicProjects: MusicProjectType[]
+}
+
+const Music = ({ allMusicProjects }: MusicProps) => {
   const { toggleModal } = UseModal()
 
   return (
@@ -15,24 +21,31 @@ const Music = ({ allMusicProjects }) => {
 
       <MusicKey />
 
-      {allMusicProjects.map((project, key) => {
-        const { wrote, produced, performed, title, artist, releaseDate } =
-          project
+      {allMusicProjects.map((project: MusicProjectType, key: number) => {
+        const {
+          wrote,
+          produced,
+          performed,
+          title,
+          artist,
+          releaseDate,
+          artwork,
+        } = project
         return (
           <div
             className={cn(
               'flex items-start justify-between gap-2 border-b border-l border-r border-solid border-ink px-4 py-2 first-of-type:border-t',
               key === 0 && 'border-t',
             )}
-            key={project.sys.id}
+            key={project?.sys?.id}
           >
             <button
-              onClick={toggleModal}
+              onClick={() => toggleModal(project)}
               className="flex gap-4 text-left transition-colors hover:text-red"
             >
               <Image
-                src={project.artwork.url}
-                alt={project.artwork.title}
+                src={artwork?.url}
+                alt={artwork?.title}
                 height={400}
                 width={400}
                 className="h-full w-24"
