@@ -47,12 +47,6 @@ const Modal = () => {
       overlayClassName="fixed top-0 left-0 h-full w-full flex items-center justify-center bg-ink bg-opacity-50 z-50 p-4 lg:p-24 opacity-100"
     >
       <div className="flex w-full flex-col">
-        <button
-          className="absolute right-4 top-4 z-10  font-lack text-reverse"
-          onClick={() => toggleModal(null)}
-        >
-          &#x2715;
-        </button>
         <Image
           src={artwork.url}
           alt={artwork.title}
