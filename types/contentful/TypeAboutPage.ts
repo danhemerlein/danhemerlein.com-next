@@ -13,5 +13,3 @@ export interface TypeAboutPageFields {
   contentTypeId?: EntryFields.Symbol
   fields?: {}
 }
-
-export type TypeAboutPage = Entry<TypeAboutPageFields>

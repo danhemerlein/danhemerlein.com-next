@@ -17,14 +17,14 @@ const Hero = ({ aboutPage }: HeroProps) => {
   return (
     <div className="flex gap-4">
       <div className="rtc">
-        {contactLineOne?.json?.content.map((item: any) => {
+        {contactLineOne?.content.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),
           )
         })}
 
-        {contactLineTwo?.json?.content.map((item: any) => {
+        {contactLineTwo?.content.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),
@@ -39,7 +39,7 @@ const Hero = ({ aboutPage }: HeroProps) => {
         />
       </div>
       <div className="rtc">
-        {bio?.json?.content.map((item: any) => {
+        {bio?.content.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),

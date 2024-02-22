@@ -4,11 +4,6 @@ interface SysProps {
   id: string
 }
 
-interface HeroImageProps {
-  title: string
-  url: string
-  sys: SysProps
-}
 interface ImageProps {
   title: string
   url: string
@@ -47,5 +42,5 @@ export type AboutPageType = Contentful.TypeAboutPageFields & {
   contactLineOne: any
   contactLineTwo: any
   bio: any
-  heroImage: HeroImageProps
+  heroImage: ImageProps
 }

@@ -275,9 +275,6 @@ export const getMoodboard = async (): Promise<any[]> => {
 
 // about
 const imageBase = `
-  sys {
-    id
-  }
   title
   url
 `
@@ -301,7 +298,7 @@ const aboutBase = `
   }
 `
 
-const extractAboutPage = (fetchResponse: any): any[] => {
+const extractAboutPage = (fetchResponse: any) => {
   return {
     ...fetchResponse?.data?.aboutPage,
     heroImage: fetchResponse?.data?.aboutPage.heroImage,
@@ -311,16 +308,14 @@ const extractAboutPage = (fetchResponse: any): any[] => {
   }
 }
 
-export const getAboutPage = async (isDraftMode: boolean): Promise<any[]> => {
+export const getAboutPage = async (): Promise<any> => {
   const entries = await fetchGraphQL(
     `query {
-      aboutPage(id: "4s79WxHDy7QgVK7V8qomFM" preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      aboutPage(id: "4s79WxHDy7QgVK7V8qomFM") {
        ${aboutBase}
       }
     }`,
-    isDraftMode,
   )
+
   return extractAboutPage(entries)
 }
