@@ -1,5 +1,11 @@
 import { BlogPostType } from '@/types'
 
+// image base
+const imageBase = `
+  title
+  url
+`
+
 const fetchGraphQL = async (query: string, preview = false): Promise<any> =>
   fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -117,9 +123,7 @@ const extractMusicProjectEntries = (fetchResponse: any): any[] =>
 export const getAllMusicProjects = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      musicProjectCollection(order: order_ASC
-
-      ) {
+      musicProjectCollection(order: order_ASC) {
        ${musicProjectBase}
       }
     }`,
@@ -248,8 +252,7 @@ const moodboardBase = `
   imagesCollection {
     total
     items {
-      title
-      url
+      ${imageBase}
     }
   }
 `
@@ -268,12 +271,6 @@ export const getMoodboard = async (): Promise<any[]> => {
   )
   return extractMoodboardEntries(entries)
 }
-
-// about
-const imageBase = `
-  title
-  url
-`
 
 const aboutBase = `
   sys {
@@ -314,4 +311,89 @@ export const getAboutPage = async (): Promise<any> => {
   )
 
   return extractAboutPage(entries)
+}
+
+const aboutBlockBase = `
+  sys {
+    id
+  }
+  firstImage {
+    ${imageBase}
+  }
+  secondImage {
+    ${imageBase}
+  }
+  bio {
+    json
+  }
+`
+
+const extractAboutBlock = (fetchResponse: any) => {
+  return {
+    bio: fetchResponse?.data?.aboutBlock.bio.json,
+    firstImage: fetchResponse?.data?.aboutBlock.firstImage,
+    secondImage: fetchResponse?.data?.aboutBlock.secondImage,
+  }
+}
+
+export const getAboutBlock = async (): Promise<any> => {
+  const entries = await fetchGraphQL(
+    `query {
+      aboutBlock(id: "3kQdi95UeZDBl8wcDd0h5i") {
+       ${aboutBlockBase}
+      }
+    }`,
+  )
+
+  return extractAboutBlock(entries)
+}
+
+const editorialBlockBase = `
+  items {
+    sys {
+      id
+    }
+    title
+    subtext
+    image {
+      ${imageBase}
+    }
+    ctaText
+    ctaUrl
+    secondTitle
+    secondSubtitle
+    secondImage {
+      ${imageBase}
+    }
+    secondCtaText
+    secondCtaUrl
+  }
+`
+
+const extractEditorialBlock = (fetchResponse: any) => {
+  const item = fetchResponse.data.editorialBlockCollection.items[0]
+
+  return {
+    title: item.title,
+    subtext: item.subtext,
+    image: item.image,
+    ctaText: item.ctaText,
+    ctaUrl: item.ctaUrl,
+    secondTitle: item.secondTitle,
+    secondSubtitle: item.secondSubtitle,
+    secondImage: item.secondImage,
+    secondCtaText: item.secondCtaText,
+    secondCtaUrl: item.secondCtaUrl,
+  }
+}
+
+export const getEditorialBlock = async (): Promise<any> => {
+  const entries = await fetchGraphQL(
+    `query {
+      editorialBlockCollection(limit: 2) {
+        ${editorialBlockBase}
+      }
+  }`,
+  )
+  return extractEditorialBlock(entries)
 }

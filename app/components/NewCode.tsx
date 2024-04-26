@@ -5,7 +5,7 @@ const NewCode = () => (
     <div className="min-h-[128px] border border-l-0 border-r-0 border-solid py-2">
       <span className="text-4xl uppercase">code</span>
       <p className="text-base lowercase">
-        Web Engineering, Tech Leadership, Project Delivery
+        Web Engineering, Tech Leadership, Passion Projects
       </p>
     </div>
 

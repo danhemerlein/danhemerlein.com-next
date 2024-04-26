@@ -1,12 +1,9 @@
 'use client'
-// import cn from 'classnames'
 import Image from 'next/image'
 
 import { MusicProjectType } from '@/types'
 
 import { UseModal } from '../hooks/UseModal'
-
-// import MusicKey from './MusicKey'
 
 interface MusicProps {
   allMusicProjects: MusicProjectType[]
@@ -50,7 +47,7 @@ const Music = ({ allMusicProjects }: MusicProps) => {
           } = project
           return (
             <div
-              className="flex min-h-[128px] flex-col items-start border border-l-0 border-r-0 border-solid py-2 transition-colors hover:text-red"
+              className="flex min-h-[128px] flex-col items-start border border-l-0 border-r-0 border-solid py-2 transition-colors hover:text-red focus:text-red"
               key={project?.sys?.id}
             >
               <button onClick={() => toggleModal(project)}>
