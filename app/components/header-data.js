@@ -10,6 +10,7 @@ export const codeProjects = [
     job: 'Thinx',
     description: 'E-Commerce Brand',
     hasSubprojects: false,
+    projects: ['test', 'test'],
     subLabel: 'View Site',
   },
   {

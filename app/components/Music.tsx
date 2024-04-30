@@ -3,14 +3,14 @@ import Image from 'next/image'
 
 import { MusicProjectType } from '@/types'
 
-import { UseModal } from '../hooks/UseModal'
+// import { UseModal } from '../hooks/UseModal'
 
 interface MusicProps {
   allMusicProjects: MusicProjectType[]
 }
 
 const Music = ({ allMusicProjects }: MusicProps) => {
-  const { toggleModal } = UseModal()
+  // const { toggleModal } = UseModal()
 
   return (
     <>
@@ -50,7 +50,7 @@ const Music = ({ allMusicProjects }: MusicProps) => {
               className="flex min-h-[128px] flex-col items-start border border-l-0 border-r-0 border-solid py-2 transition-colors hover:text-red focus:text-red"
               key={project?.sys?.id}
             >
-              <button onClick={() => toggleModal(project)}>
+              <button>
                 <Image
                   src={artwork?.url}
                   alt={artwork?.title}

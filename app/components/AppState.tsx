@@ -1,14 +1,21 @@
 'use client'
 
-import { ModalContext, UseModalState } from '../hooks/UseModal'
+import {
+  BroswerModalContext,
+  UseBrowserModalState,
+} from '../hooks/UseBrowserModal'
 
 const AppState = ({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) => {
-  const modal = UseModalState()
+  const modal = UseBrowserModalState()
 
-  return <ModalContext.Provider value={modal}>{children}</ModalContext.Provider>
+  return (
+    <BroswerModalContext.Provider value={modal}>
+      {children}
+    </BroswerModalContext.Provider>
+  )
 }
 export default AppState

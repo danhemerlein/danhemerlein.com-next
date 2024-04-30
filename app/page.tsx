@@ -7,6 +7,7 @@ import {
 import { chunkArray } from '@/lib/helper-functions'
 
 import About from './components/About'
+import Browser from './components/Browser'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Music from './components/Music'
@@ -31,7 +32,8 @@ const Home = async () => {
         <Music allMusicProjects={allMusicProjects} />
       </div>
       <Footer />
-      <MusicModal />
+      {/* <MusicModal /> */}
+      <Browser />
     </>
   )
 }
