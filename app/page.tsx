@@ -1,5 +1,3 @@
-import { draftMode } from 'next/headers'
-
 import {
   getAboutPage,
   getAllBlogList,
@@ -8,33 +6,34 @@ import {
 } from '@/lib/api'
 import { chunkArray } from '@/lib/helper-functions'
 
-import BlogList from './components/BlogList'
-import Code from './components/Code'
+import About from './components/About'
+import Browser from './components/Browser'
 import Footer from './components/Footer'
-import Hero from './components/Hero'
+import Header from './components/Header'
 import Music from './components/Music'
 import MusicModal from './components/MusicModal'
+import NewCode from './components/NewCode'
+import TwoUpEditorial from './components/TwoUpEditorial'
 
 const Home = async () => {
-  const { isEnabled } = draftMode()
-
-  const allCodeProjects = await getAllCodeProjects(isEnabled)
-  const allMusicProjects = await getAllMusicProjects(isEnabled)
+  const allCodeProjects = await getAllCodeProjects()
+  const allMusicProjects = await getAllMusicProjects()
   const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage()
   const chunkedBlogPosts = chunkArray(allBlogPosts, 10)
 
   return (
     <>
-      <Hero aboutPage={aboutPage} />
-      <Code allCodeProjects={allCodeProjects} />
-      <Music allMusicProjects={allMusicProjects} />
-      <BlogList
-        allBlogPosts={chunkedBlogPosts}
-        totalPosts={allBlogPosts.length}
-      />
+      <Header />
+      <div className="mx-auto max-w-[1440px]">
+        <NewCode />
+        <TwoUpEditorial />
+        <About />
+        <Music allMusicProjects={allMusicProjects} />
+      </div>
       <Footer />
-      <MusicModal />
+      {/* <MusicModal /> */}
+      <Browser />
     </>
   )
 }

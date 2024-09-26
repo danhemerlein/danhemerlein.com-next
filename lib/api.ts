@@ -1,5 +1,11 @@
 import { BlogPostType } from '@/types'
 
+// image base
+const imageBase = `
+  title
+  url
+`
+
 const fetchGraphQL = async (query: string, preview = false): Promise<any> =>
   fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -56,18 +62,13 @@ const extractCodeProjectEntries = (fetchResponse: any): any[] => {
   return fetchResponse?.data?.codeProjectCollection?.items
 }
 
-export const getAllCodeProjects = async (
-  isDraftMode: boolean,
-): Promise<any[]> => {
+export const getAllCodeProjects = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      codeProjectCollection(order: order_ASC preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      codeProjectCollection(order: order_ASC) {
        ${codeProjectBase}
       }
     }`,
-    isDraftMode,
   )
   return extractCodeProjectEntries(entries).map((entry: any) => {
     return {
@@ -119,18 +120,13 @@ const musicProjectBase = `
 const extractMusicProjectEntries = (fetchResponse: any): any[] =>
   fetchResponse?.data?.musicProjectCollection?.items
 
-export const getAllMusicProjects = async (
-  isDraftMode: boolean,
-): Promise<any[]> => {
+export const getAllMusicProjects = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      musicProjectCollection(order: order_ASC preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      musicProjectCollection(order: order_ASC) {
        ${musicProjectBase}
       }
     }`,
-    isDraftMode,
   )
   return extractMusicProjectEntries(entries)
 }
@@ -256,8 +252,7 @@ const moodboardBase = `
   imagesCollection {
     total
     items {
-      title
-      url
+      ${imageBase}
     }
   }
 `
@@ -276,12 +271,6 @@ export const getMoodboard = async (): Promise<any[]> => {
   )
   return extractMoodboardEntries(entries)
 }
-
-// about
-const imageBase = `
-  title
-  url
-`
 
 const aboutBase = `
   sys {
@@ -322,4 +311,89 @@ export const getAboutPage = async (): Promise<any> => {
   )
 
   return extractAboutPage(entries)
+}
+
+const aboutBlockBase = `
+  sys {
+    id
+  }
+  firstImage {
+    ${imageBase}
+  }
+  secondImage {
+    ${imageBase}
+  }
+  bio {
+    json
+  }
+`
+
+const extractAboutBlock = (fetchResponse: any) => {
+  return {
+    bio: fetchResponse?.data?.aboutBlock.bio.json,
+    firstImage: fetchResponse?.data?.aboutBlock.firstImage,
+    secondImage: fetchResponse?.data?.aboutBlock.secondImage,
+  }
+}
+
+export const getAboutBlock = async (): Promise<any> => {
+  const entries = await fetchGraphQL(
+    `query {
+      aboutBlock(id: "3kQdi95UeZDBl8wcDd0h5i") {
+       ${aboutBlockBase}
+      }
+    }`,
+  )
+
+  return extractAboutBlock(entries)
+}
+
+const editorialBlockBase = `
+  items {
+    sys {
+      id
+    }
+    title
+    subtext
+    image {
+      ${imageBase}
+    }
+    ctaText
+    ctaUrl
+    secondTitle
+    secondSubtitle
+    secondImage {
+      ${imageBase}
+    }
+    secondCtaText
+    secondCtaUrl
+  }
+`
+
+const extractEditorialBlock = (fetchResponse: any) => {
+  const item = fetchResponse.data.editorialBlockCollection.items[0]
+
+  return {
+    title: item.title,
+    subtext: item.subtext,
+    image: item.image,
+    ctaText: item.ctaText,
+    ctaUrl: item.ctaUrl,
+    secondTitle: item.secondTitle,
+    secondSubtitle: item.secondSubtitle,
+    secondImage: item.secondImage,
+    secondCtaText: item.secondCtaText,
+    secondCtaUrl: item.secondCtaUrl,
+  }
+}
+
+export const getEditorialBlock = async (): Promise<any> => {
+  const entries = await fetchGraphQL(
+    `query {
+      editorialBlockCollection(limit: 2) {
+        ${editorialBlockBase}
+      }
+  }`,
+  )
+  return extractEditorialBlock(entries)
 }

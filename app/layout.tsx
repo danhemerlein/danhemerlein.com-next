@@ -20,7 +20,7 @@ const Layout = ({
   <html lang="en">
     <body className={inter.className}>
       <AppState>
-        <main className="p-4">{children}</main>
+        <main className="px-10 py-6">{children}</main>
       </AppState>
     </body>
   </html>
