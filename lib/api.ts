@@ -206,26 +206,17 @@ export const getAllBlogList = async (): Promise<any[]> => {
 }
 
 export const getAllBlog = async (): Promise<any[]> => {
-  const pageSize = 10
   const allBlogPosts = []
-  let skip = 0
 
-  while (true) {
-    const entries = await fetchGraphQL(
-      `query {
-        blogPostCollection(order: published_DESC, limit: ${pageSize}, skip: ${skip}) {
+  const entries = await fetchGraphQL(
+    `query {
+        blogPostCollection(order: published_DESC) {
           ${blogBase}
         }
       }`,
-    )
+  )
 
-    if (entries?.data?.blogPostCollection?.items?.length === 0) {
-      break
-    }
-
-    allBlogPosts.push(...extractBlogEntries(entries))
-    skip += pageSize
-  }
+  allBlogPosts.push(...extractBlogEntries(entries))
 
   return allBlogPosts
 }
