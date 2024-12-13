@@ -122,11 +122,3 @@ export const altTextHelper = (str: string) => {
 
   return replaced
 }
-
-export const chunkArray = (arr: BlogPostListType[], size: number) => {
-  const result = []
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size))
-  }
-  return result
-}
