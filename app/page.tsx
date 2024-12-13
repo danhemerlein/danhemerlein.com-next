@@ -11,14 +11,13 @@ import BlogList from './components/BlogList'
 import Code from './components/Code'
 import Hero from './components/Hero'
 import Music from './components/Music'
-import MusicModal from './components/MusicModal'
 
 const Home = async () => {
   const { isEnabled } = draftMode()
 
   const allCodeProjects = await getAllCodeProjects(isEnabled)
   const allMusicProjects = await getAllMusicProjects(isEnabled)
-  // const allBlogPosts = await getAllBlogList()
+  const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage()
 
   return (
@@ -26,8 +25,7 @@ const Home = async () => {
       <Hero aboutPage={aboutPage} />
       <Code allCodeProjects={allCodeProjects} />
       <Music allMusicProjects={allMusicProjects} />
-      {/* <BlogList posts={allBlogPosts} /> */}
-      <MusicModal />
+      <BlogList posts={allBlogPosts} />
     </>
   )
 }

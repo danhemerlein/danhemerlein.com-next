@@ -189,63 +189,63 @@ const blogBase = `
   }
 `
 
-// const extractBlogEntries = (fetchResponse: any): any[] => {
-//   return fetchResponse?.data?.blogPostCollection?.items
-// }
+const extractBlogEntries = (fetchResponse: any): any[] => {
+  return fetchResponse?.data?.blogPostCollection?.items
+}
 
-// export const getAllBlogList = async (): Promise<any[]> => {
-//   const entries = await fetchGraphQL(
-//     `query {
-//         blogPostCollection(order: published_DESC) {
-//           ${blogHomeBase}
-//         }
-//       }`,
-//   )
+export const getAllBlogList = async (): Promise<any[]> => {
+  const entries = await fetchGraphQL(
+    `query {
+        blogPostCollection(order: published_DESC) {
+          ${blogHomeBase}
+        }
+      }`,
+  )
 
-//   return extractBlogEntries(entries)
-// }
+  return extractBlogEntries(entries)
+}
 
-// export const getAllBlog = async (): Promise<any[]> => {
-//   const pageSize = 10
-//   const allBlogPosts = []
-//   let skip = 0
+export const getAllBlog = async (): Promise<any[]> => {
+  const pageSize = 10
+  const allBlogPosts = []
+  let skip = 0
 
-//   while (true) {
-//     const entries = await fetchGraphQL(
-//       `query {
-//         blogPostCollection(order: published_DESC, limit: ${pageSize}, skip: ${skip}) {
-//           ${blogBase}
-//         }
-//       }`,
-//     )
+  while (true) {
+    const entries = await fetchGraphQL(
+      `query {
+        blogPostCollection(order: published_DESC, limit: ${pageSize}, skip: ${skip}) {
+          ${blogBase}
+        }
+      }`,
+    )
 
-//     if (entries?.data?.blogPostCollection?.items?.length === 0) {
-//       break
-//     }
+    if (entries?.data?.blogPostCollection?.items?.length === 0) {
+      break
+    }
 
-//     allBlogPosts.push(...extractBlogEntries(entries))
-//     skip += pageSize
-//   }
+    allBlogPosts.push(...extractBlogEntries(entries))
+    skip += pageSize
+  }
 
-//   return allBlogPosts
-// }
+  return allBlogPosts
+}
 
-// const extractBlogEntry = (fetchResponse: any): BlogPostType => {
-//   return fetchResponse?.data?.blogPostCollection?.items[0]
-// }
+const extractBlogEntry = (fetchResponse: any): BlogPostType => {
+  return fetchResponse?.data?.blogPostCollection?.items[0]
+}
 
-// export const getBlogPostByHandle = async (
-//   handle: string,
-// ): Promise<BlogPostType> => {
-//   const entry = await fetchGraphQL(
-//     `query {
-//       blogPostCollection(where: { handle: "${handle}" },  limit: 1) {
-//         ${blogBase}
-//       }
-//     }`,
-//   )
-//   return extractBlogEntry(entry)
-// }
+export const getBlogPostByHandle = async (
+  handle: string,
+): Promise<BlogPostType> => {
+  const entry = await fetchGraphQL(
+    `query {
+      blogPostCollection(where: { handle: "${handle}" },  limit: 1) {
+        ${blogBase}
+      }
+    }`,
+  )
+  return extractBlogEntry(entry)
+}
 
 // mooboard
 const moodboardBase = `
