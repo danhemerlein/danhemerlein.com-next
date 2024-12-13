@@ -64,7 +64,7 @@ export const getAllCodeProjects = async (): Promise<any[]> => {
       }
     }`,
   )
-  return extractCodeProjectEntries(entries).map((entry: any) => {
+  return extractCodeProjectEntries(entries)?.map((entry: any) => {
     return {
       ...entry,
       description: entry.description.json,

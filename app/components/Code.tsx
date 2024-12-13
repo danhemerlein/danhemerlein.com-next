@@ -12,7 +12,7 @@ const Code = ({ allCodeProjects }: CodeProps) => {
   return (
     <>
       <h2 className="my-4 font-bold">code</h2>
-      {allCodeProjects.map((project: CodeProjectType, key: number) => {
+      {allCodeProjects?.map((project: CodeProjectType, key: number) => {
         return (
           <CodeAccordion
             project={project}

@@ -57,11 +57,11 @@ export const readingTime = (str: string) => {
 export const calculateReadingTimeFromContentfulContent = (arr: any[]) => {
   const textNodes = getTextNodes(arr)
 
-  const orderedList = arr.filter((node) => {
+  const orderedList = arr?.filter((node) => {
     return node.nodeType === 'ordered-list'
   })
 
-  const content = textNodes.map((node: { content: any }) => {
+  const content = textNodes?.map((node: { content: any }) => {
     return node.content
   })
 
@@ -76,8 +76,8 @@ export const calculateReadingTimeFromContentfulContent = (arr: any[]) => {
       const tn = node.content.filter((n) => {
         return n.nodeType !== 'embedded-asset-block'
       })
-      tn.map((n) => {
-        n.content.map((p: any) => {
+      tn?.map((n) => {
+        n?.content.map((p: any) => {
           start += `${p.value} `
         })
       })
@@ -86,7 +86,7 @@ export const calculateReadingTimeFromContentfulContent = (arr: any[]) => {
 
   content
     .flat()
-    .map((node: { value: string; content: { value: string }[] }) => {
+    ?.map((node: { value: string; content: { value: string }[] }) => {
       if (node.value) {
         start += `${node?.value?.trim()} `
       } else if (node.content) {

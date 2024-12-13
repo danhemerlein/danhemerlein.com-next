@@ -21,7 +21,7 @@ const Music = ({ allMusicProjects }: MusicProps) => {
 
       <MusicKey />
 
-      {allMusicProjects.map((project: MusicProjectType, key: number) => {
+      {allMusicProjects?.map((project: MusicProjectType, key: number) => {
         const {
           wrote,
           produced,
