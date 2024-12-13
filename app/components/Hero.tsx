@@ -17,20 +17,6 @@ const Hero = ({ aboutPage }: HeroProps) => {
   return (
     <div className="flex gap-4">
       <div className="rtc">
-        {/* {contactLineOne?.content?.map((item: any) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(aboutPage, true),
-          )
-        })}
-
-        {contactLineTwo?.content?.map((item: any) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(aboutPage, true),
-          )
-        })} */}
-
         <Image
           src={heroImage?.url}
           height={500}
@@ -38,14 +24,7 @@ const Hero = ({ aboutPage }: HeroProps) => {
           alt={heroImage?.title}
         />
       </div>
-      <div className="rtc">
-        {/* {bio?.content?.map((item: any) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(aboutPage, true),
-          )
-        })} */}
-      </div>
+      <div className="rtc"></div>
     </div>
   )
 }

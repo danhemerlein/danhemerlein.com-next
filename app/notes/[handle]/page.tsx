@@ -31,31 +31,6 @@ const BlogPost = async ({ params }: BlogPostProps) => {
           <h1 className="mb-4 text-left text-4xl font-bold tracking-tighter sm:text-5xl">
             {title}
           </h1>
-
-          <div className="mb-2 ">{description}</div>
-
-          <div className="mb-4">
-            <p className="mb-2">
-              published on {createReadableDateFromContentful(published)}
-            </p>
-            <p className="mb-2">
-              updated on {createReadableDateFromContentful(updatedAt)}
-            </p>
-            <p className="mb-2">
-              estimated reading time:{' '}
-              {calculateReadingTimeFromContentfulContent(content.json.content)}
-              min
-            </p>
-          </div>
-
-          {/* <div className="rtc ">
-            {content?.json?.content?.map((item: any) => {
-              return documentToReactComponents(
-                item,
-                generateRichTextParserOptions(post, true),
-              )
-            })}
-          </div> */}
         </div>
       </section>
     </main>
