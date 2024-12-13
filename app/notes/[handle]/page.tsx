@@ -9,14 +9,6 @@ import {
 import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
 import { BlogPostType } from '@/types'
 
-export const generateStaticParams = async () => {
-  const allBlogPosts = await getAllBlog()
-
-  return allBlogPosts.map((post) => ({
-    handle: post.handle,
-  }))
-}
-
 interface BlogPostProps {
   params: { handle: string }
 }

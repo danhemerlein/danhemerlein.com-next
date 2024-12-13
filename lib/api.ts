@@ -168,7 +168,6 @@ const blogSysBase = `
 `
 
 const blogBase = `
-
   items {
     ${blogSysBase}
 
@@ -206,19 +205,19 @@ export const getAllBlogList = async (): Promise<any[]> => {
 }
 
 export const getAllBlog = async (): Promise<any[]> => {
-  const allBlogPosts = []
-
   const entries = await fetchGraphQL(
     `query {
         blogPostCollection(order: published_DESC) {
-          ${blogBase}
+          items {
+            sys {
+              id
+            }
+          }
         }
       }`,
   )
 
-  allBlogPosts.push(...extractBlogEntries(entries))
-
-  return allBlogPosts
+  return extractBlogEntries(entries)
 }
 
 const extractBlogEntry = (fetchResponse: any): BlogPostType => {
