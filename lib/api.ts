@@ -125,6 +125,108 @@ export const getAllMusicProjects = async (): Promise<any[]> => {
   return extractMusicProjectEntries(entries)
 }
 
+// blog
+const blogHomeBase = `
+  items {
+    sys {
+      id
+      publishedAt
+    }
+
+    title
+    handle
+    published
+
+  }
+`
+
+const blogSysBase = `
+  sys {
+    id
+    publishedAt
+  }
+
+  title
+  description
+  handle
+  published
+
+  coverImage {
+    title
+    url
+  }
+`
+
+const blogBase = `
+  items {
+    ${blogSysBase}
+
+    content {
+      json
+      links {
+        assets {
+          block {
+            title
+            url
+            sys {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+const extractBlogEntries = (fetchResponse: any): any[] => {
+  return fetchResponse?.data?.blogPostCollection?.items
+}
+
+export const getAllBlogList = async (): Promise<any[]> => {
+  const entries = await fetchGraphQL(
+    `query {
+        blogPostCollection(order: published_DESC) {
+          ${blogHomeBase}
+        }
+      }`,
+  )
+
+  return extractBlogEntries(entries)
+}
+
+export const getAllBlog = async (): Promise<any[]> => {
+  const entries = await fetchGraphQL(
+    `query {
+        blogPostCollection(order: published_DESC) {
+          items {
+            sys {
+              id
+            }
+          }
+        }
+      }`,
+  )
+
+  return extractBlogEntries(entries)
+}
+
+const extractBlogEntry = (fetchResponse: any): BlogPostType => {
+  return fetchResponse?.data?.blogPostCollection?.items[0]
+}
+
+export const getBlogPostByHandle = async (
+  handle: string,
+): Promise<BlogPostType> => {
+  const entry = await fetchGraphQL(
+    `query {
+      blogPostCollection(where: { handle: "${handle}" },  limit: 1) {
+        ${blogBase}
+      }
+    }`,
+  )
+  return extractBlogEntry(entry)
+}
+
 // mooboard
 const moodboardBase = `
   sys {

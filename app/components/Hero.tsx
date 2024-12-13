@@ -8,7 +8,7 @@ interface HeroProps {
   aboutPage: AboutPageType
 }
 const Hero = ({ aboutPage }: HeroProps) => {
-  const { contactLineOne, contactLineTwo, bio, heroImage } = aboutPage
+  const { contactLineOne, bio, heroImage } = aboutPage
 
   if (!aboutPage) {
     throw new Error('aboutPage is undefined')
@@ -18,13 +18,6 @@ const Hero = ({ aboutPage }: HeroProps) => {
     <div className="flex gap-4">
       <div className="rtc">
         {contactLineOne?.content?.map((item: any) => {
-          return documentToReactComponents(
-            item,
-            generateRichTextParserOptions(aboutPage, true),
-          )
-        })}
-
-        {contactLineTwo?.content?.map((item: any) => {
           return documentToReactComponents(
             item,
             generateRichTextParserOptions(aboutPage, true),
