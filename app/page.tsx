@@ -1,5 +1,3 @@
-import { draftMode } from 'next/headers'
-
 import {
   getAboutPage,
   getAllBlogList,
@@ -13,10 +11,8 @@ import Hero from './components/Hero'
 import Music from './components/Music'
 
 const Home = async () => {
-  const { isEnabled } = draftMode()
-
-  const allCodeProjects = await getAllCodeProjects(isEnabled)
-  const allMusicProjects = await getAllMusicProjects(isEnabled)
+  const allCodeProjects = await getAllCodeProjects()
+  const allMusicProjects = await getAllMusicProjects()
   const allBlogPosts = await getAllBlogList()
   const aboutPage = await getAboutPage()
 

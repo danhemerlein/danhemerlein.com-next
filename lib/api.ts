@@ -56,18 +56,13 @@ const extractCodeProjectEntries = (fetchResponse: any): any[] => {
   return fetchResponse?.data?.codeProjectCollection?.items
 }
 
-export const getAllCodeProjects = async (
-  isDraftMode: boolean,
-): Promise<any[]> => {
+export const getAllCodeProjects = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      codeProjectCollection(order: order_ASC preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      codeProjectCollection(order: order_ASC) {
        ${codeProjectBase}
       }
     }`,
-    isDraftMode,
   )
   return extractCodeProjectEntries(entries).map((entry: any) => {
     return {
@@ -119,18 +114,13 @@ const musicProjectBase = `
 const extractMusicProjectEntries = (fetchResponse: any): any[] =>
   fetchResponse?.data?.musicProjectCollection?.items
 
-export const getAllMusicProjects = async (
-  isDraftMode: boolean,
-): Promise<any[]> => {
+export const getAllMusicProjects = async (): Promise<any[]> => {
   const entries = await fetchGraphQL(
     `query {
-      musicProjectCollection(order: order_ASC preview: ${
-        isDraftMode ? 'true' : 'false'
-      }) {
+      musicProjectCollection(order: order_ASC) {
        ${musicProjectBase}
       }
     }`,
-    isDraftMode,
   )
   return extractMusicProjectEntries(entries)
 }
