@@ -49,7 +49,7 @@ const BlogPost = async ({ params }: BlogPostProps) => {
           </div>
 
           <div className="rtc ">
-            {content.json.content.map((item: any) => {
+            {content?.json?.content?.map((item: any) => {
               return documentToReactComponents(
                 item,
                 generateRichTextParserOptions(post, true),
