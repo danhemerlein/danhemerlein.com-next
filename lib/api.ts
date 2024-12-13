@@ -219,7 +219,7 @@ export const getAllBlog = async (): Promise<any[]> => {
       }`,
     )
 
-    if (entries.data.blogPostCollection.items.length === 0) {
+    if (entries?.data?.blogPostCollection?.items?.length === 0) {
       break
     }
 
