@@ -54,7 +54,7 @@ const Page = async () => {
     )
   }
 
-  const imageMatrix = moodboard.reduce((rows, image, index) => {
+  const imageMatrix = moodboard?.reduce((rows, image, index) => {
     return (
       (index % 2 === 0
         ? rows.push([image])
@@ -66,9 +66,11 @@ const Page = async () => {
     <>
       <h1 className="visually-hidden">moodboard</h1>
       <div className="relative grid grid-cols-1 ">
-        {imageMatrix.map((imageGroup: MoodboardImageGroup[], index: number) => {
-          return renderGalleryRow(imageGroup, index)
-        })}
+        {imageMatrix?.map(
+          (imageGroup: MoodboardImageGroup[], index: number) => {
+            return renderGalleryRow(imageGroup, index)
+          },
+        )}
       </div>
     </>
   )
