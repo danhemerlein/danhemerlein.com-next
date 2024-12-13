@@ -10,7 +10,7 @@ import { generateRichTextParserOptions } from '@/lib/rich-text-helpers'
 import { BlogPostType } from '@/types'
 
 export const generateStaticParams = async () => {
-  const allBlogPosts: BlogPostType[] = await getAllBlog()
+  const allBlogPosts = await getAllBlog()
 
   return allBlogPosts.map((post) => ({
     handle: post.handle,
